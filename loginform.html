@@ -280,12 +280,12 @@ class="close" title="Close Modal">&times;</span>
               </div>
             </div>
             <div class="bottom-content">
-              <form action="#" method="post">
+              <form action="" method="post">
                 <div class="editContent" style="outline: none; cursor: inherit;">
-                   <input type="email" name="email" class="input-form" placeholder="Email" required="required">
+                   <input type="email" name="email" id="email" class="input-form" placeholder="Email" required="required">
                 </div>
                 <div class="editContent" style="outline: none; cursor: inherit;">
-                   <input type="password" name="password" class="input-form" placeholder="Password" required="required">
+                   <input type="password" name="password" id="password" class="input-form" placeholder="Password" required="required">
                 </div>
                 <button type="submit" class="loginhny-btn btn" style="outline: none; cursor: inherit;">Login</button>
               </form>
@@ -323,3 +323,39 @@ window.onclick = function(event) {
 
 </body>
 </html>
+
+<?php
+
+$host = "localhost";
+$uname = "root";
+$pass = "";
+$dbname = "mail_client";
+$conn = new mysqli($host, $uname, $pass, $dbname);
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+
+}
+else
+{
+  if (isset($_POST['email']) && isset($_POST['password'])) {
+  
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+  $sql = "SELECT * FROM log WHERE email='$email'";
+  $cred = $conn->query($sql);
+  $result = $cred->fetch_assoc();; 
+
+     if($result['email']==$email && $result['pass']==$password)
+    {
+      echo"Good News";
+    }
+    else{
+      echo "incorrect email or password";
+    }
+    }
+ 
+
+$conn->close();
+   
+?>
